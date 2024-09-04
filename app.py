@@ -8,6 +8,19 @@ import uuid
 import os
 from io import BytesIO
 
+
+def download_file(url, destination_path):
+    response = requests.get(url, stream=True)
+    if response.status_code == 200:
+        with open(destination_path, 'wb') as file:
+            for chunk in response.iter_content(chunk_size=8192):
+                file.write(chunk)
+        print(f"File downloaded successfully to {destination_path}")
+    else:
+        print(f"Failed to download file. Status code: {response.status_code}")
+
+# Example usage
+url = 'https://raw.githubusercontent.com/PrasadKhambadkar/Navigation_Feedback_Form/main/sih-1710-cc98c04cdbab.json'
 def get_location():
     response = requests.get('https://ipinfo.io')
     data = response.json()
@@ -20,7 +33,7 @@ def get_location():
 try:
     app = get_app()
 except ValueError:
-    cred = credentials.Certificate('sih-1710-cc98c04cdbab.json')
+    cred = credentials.Certificate(url)
     app = initialize_app(cred, {
         'databaseURL': 'https://sih-1710-default-rtdb.firebaseio.com/',
     })
