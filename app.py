@@ -48,7 +48,7 @@ hidden_field = st.text_input("Enter your City", label_visibility="hidden", disab
 
 # Check if the hidden field was filled out
 if hidden_field:
-    st.error("Bot detection triggered. Please do not submit the form with modifications to hidden fields.")
+    st.error("Bot detected.")
 else:
     user_name = st.text_input("User Name")
     user_email = st.text_input("Email")
